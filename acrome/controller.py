@@ -409,6 +409,7 @@ class Stewart(Controller):
         super().__init__(portname=portname, baudrate=baudrate)
         self.__en = 0
         self.__motors = [0] * 6
+        self.__digital_pins = 0
         self.position = [0] * 6
         self.imu = [0] * 9
 
@@ -431,8 +432,11 @@ class Stewart(Controller):
             else:
                 self.__motors[i] = int(motor)
 
+    def set_digital_pins(self, pins):
+        self.__digital_pins = int(pins) & 0xFF
+
     def _write(self):
-        data = struct.pack("<BBBhhhhhh", self.__class__._HEADER, self.__class__._DEVID, self.__en, *self.__motors)
+        data = struct.pack("<BBBhhhhhhB", self.__class__._HEADER, self.__class__._DEVID, self.__en, *self.__motors, self.__digital_pins)
         data += self._crc32(data)
         super()._writebus(data)
         self.__en &= 0x01

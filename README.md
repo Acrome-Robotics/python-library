@@ -222,7 +222,15 @@ The controller module provides 6 different classes  for interacting with 5 diffe
         **`Return:`** *None*
 
         This method provides an interface to set speeds of the motors on Stewart Platform. Available range is from -1000 to 1000 for each motor. `motors` argument must be a list of 6 integers.
-    
+
+    * #### `set_digital_pins(self, pins)`
+
+        **`Return:`** *None*
+
+        This method sets the digital pin outputs of the Acrome Controller. `pins` argument is a single byte where each bit corresponds to one digital pin. Defaults to 0 when not set.
+
+        > **Note:** This method is only available in the Stewart class and requires Acrome Controller firmware that expects the digital pin field in the Stewart packet.
+
     * #### `update(self)`
         **`Return:`** *None*
 
